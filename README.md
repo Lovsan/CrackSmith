@@ -1,3 +1,5 @@
+[img]https://github.com/Lovsan/CrackSmith/blob/main/crack_smith.png[/img]
+
 # 🔐 CrackSmith
 
 A full-featured terminal-based hash cracking tool written in Python. Supports `bcrypt`, `md5`, `sha1`, and `sha256`. Includes threading, live system stats, resume mode, notifications via webhook/Discord/Telegram, and support for cracking multiple hashes.
