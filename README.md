@@ -1,4 +1,4 @@
-<img src="https://github.com/Lovsan/CrackSmith/blob/main/crack_smith.png</img>
+<img src="https://github.com/Lovsan/CrackSmith/blob/main/crack_smith.png"></img>
 
 # 🔐 CrackSmith
 
