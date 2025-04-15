@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrackSmith - Hash Cracking Tool</title>
+    <link rel="icon" type="image/png" href="https://github.com/Lovsan/CrackSmith/raw/main/crack_smith.png">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            background-color: #1e1e1e;
+            padding: 10px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        header img {
+            height: 50px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #ffffff;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #f05454;
+        }
+
+        main {
+            max-width: 900px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .info-section {
+            margin: 20px auto;
+            padding: 15px;
+            border-radius: 12px;
+            background-color: #1e1e1e;
+            box-shadow: 0 0 8px rgba(0,0,0,0.6);
+        }
+
+        .info-section h2 {
+            color: #f05454;
+            margin-bottom: 15px;
+        }
+
+        .footer {
+            margin-top: auto;
+            padding: 15px;
+            background-color: #1e1e1e;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
+        }
+
+        .footer a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: #f05454;
+        }
+
+        .webhook-img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 10px;
+            margin-top: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+        }
+
+        ul.links {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul.links li {
+            margin: 10px 0;
+        }
+
+        ul.links li a {
+            color: #3e95ff;
+            transition: color 0.3s;
+        }
+
+        ul.links li a:hover {
+            color: #f05454;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="https://github.com/Lovsan/CrackSmith/raw/main/crack_smith.png" alt="CrackSmith Logo">
+        <nav>
+            <a href="#about">About</a>
+            <a href="#usage">Usage</a>
+            <a href="#links">Useful Links</a>
+            <a href="#webhook">Discord Webhook</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="about" class="info-section">
+            <h2>About CrackSmith</h2>
+            <p>
+                CrackSmith is a powerful terminal-based tool designed to efficiently crack hashes. 
+                It offers robust capabilities like hash detection, resume modes, live statistics, system monitoring, and webhook integration for notifications.
+            </p>
+        </section>
+
+        <section id="usage" class="info-section">
+            <h2>How It Works</h2>
+            <p>
+                CrackSmith automates the process of cracking hashes using various techniques such as dictionary attacks, brute-force, and hybrid methods.
+                Simply load your hash files, choose your wordlist and attack mode, and let CrackSmith do the rest. Get notified through Discord webhooks upon completion or if hashes are cracked.
+            </p>
+            <img class="webhook-img" src="images/cracker3-success.png" alt="CrackSmith in Action"><br>
+            <img class="webhook-img" src="images/cracker_py-v1.png" alt="CrackSmith in Action"><br>
+        </section>
+
+        <section id="links" class="info-section">
+            <h2>Useful Links for Cracking Hashes</h2>
+            <ul class="links">
+                <li><a href="https://hashes.com/en/decrypt/hash">Hashes.com Decrypt Tool</a></li>
+                <li><a href="https://crackstation.net/">CrackStation Hash Cracker</a></li>
+                <li><a href="https://weakpass.com/">Weakpass - Wordlists</a></li>
+                <li><a href="https://github.com/danielmiessler/SecLists">SecLists on GitHub</a></li>
+                <li><a href="https://md5hashing.net/">MD5 Hashing</a></li>
+            </ul>
+        </section>
+
+        <section id="webhook" class="info-section">
+            <h2>Discord Webhook Integration</h2>
+            <p>
+                CrackSmith supports Discord Webhooks for real-time notifications. Monitor your cracking jobs directly in Discord and get instant alerts on cracked hashes and completion updates.
+            </p>
+            <img class="webhook-img" src="images/cracker_py_discord.png" alt="Discord Webhook Integration">
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>
+            &copy; 2025 CrackSmith by Lovsan | 
+            <a href="https://github.com/Lovsan/CrackSmith">View on GitHub</a>
+        </p>
+    </footer>
+
+</body>
+</html>
