@@ -3,20 +3,37 @@ import bcrypt
 from app.models import db, CrackingJob, UserStatistics
 from datetime import datetime
 import os
+import threading
 
 DEFAULT_WORDLIST = os.path.join(os.path.dirname(__file__), '..', '..', 'wordlists', 'common.txt')
 
+# Thread-safe job processing
+_job_threads = {}
+_threads_lock = threading.Lock()
+
 def submit_cracking_job(job_id):
     """Submit a cracking job to be processed"""
-    # In a production environment, this would submit to Celery
-    # For now, we'll process synchronously for demonstration
+    # In a production environment, use Celery for proper task queue management
+    # For now, we'll use managed threads with proper cleanup
     try:
-        from threading import Thread
-        thread = Thread(target=process_job, args=(job_id,))
-        thread.daemon = True
+        thread = threading.Thread(target=process_job, args=(job_id,))
+        thread.daemon = False  # Non-daemon thread for proper cleanup
+        
+        with _threads_lock:
+            # Clean up completed threads
+            _cleanup_threads()
+            _job_threads[job_id] = thread
+        
         thread.start()
     except Exception as e:
         print(f"Error submitting job: {e}")
+
+
+def _cleanup_threads():
+    """Clean up completed threads"""
+    completed = [job_id for job_id, thread in _job_threads.items() if not thread.is_alive()]
+    for job_id in completed:
+        del _job_threads[job_id]
 
 
 def process_job(job_id):

@@ -24,6 +24,9 @@ import {
 import { jobService, statsService } from '../services';
 import { useAuth } from '../context/AuthContext';
 
+// Constants
+const HASH_DISPLAY_LENGTH = 20;
+
 const Dashboard = () => {
   const { user } = useAuth();
   const [hashValue, setHashValue] = useState('');
@@ -276,7 +279,7 @@ const Dashboard = () => {
                             {job.hash_type.toUpperCase()} Hash
                           </Typography>
                           <Typography variant="caption" color="text.secondary">
-                            {job.hash_value.substring(0, 20)}...
+                            {job.hash_value.substring(0, HASH_DISPLAY_LENGTH)}...
                           </Typography>
                         </Box>
                       </Box>

@@ -3,8 +3,13 @@ from datetime import timedelta
 
 class Config:
     """Base configuration"""
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-secret-key-change-in-production'
-    JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY') or 'dev-jwt-secret-key-change-in-production'
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
+    
+    # Validate required secrets in production
+    if not SECRET_KEY or not JWT_SECRET_KEY:
+        raise ValueError("SECRET_KEY and JWT_SECRET_KEY must be set in environment variables")
+    
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=24)
     JWT_REFRESH_TOKEN_EXPIRES = timedelta(days=30)
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or 'sqlite:///cracksmith.db'
@@ -25,10 +30,18 @@ class Config:
 class DevelopmentConfig(Config):
     """Development configuration"""
     DEBUG = True
+    
+    # Allow default secrets in development only
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-secret-key-change-in-production'
+    JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY') or 'dev-jwt-secret-key-change-in-production'
 
 class ProductionConfig(Config):
     """Production configuration"""
     DEBUG = False
+    
+    # Ensure secrets are set in production
+    if not os.environ.get('SECRET_KEY') or not os.environ.get('JWT_SECRET_KEY'):
+        raise ValueError("SECRET_KEY and JWT_SECRET_KEY must be set in production!")
 
 config = {
     'development': DevelopmentConfig,

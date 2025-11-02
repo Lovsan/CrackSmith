@@ -15,6 +15,9 @@ import {
 import { Delete, Refresh } from '@mui/icons-material';
 import { jobService } from '../services';
 
+// Constants
+const HASH_DISPLAY_LENGTH = 40;
+
 const Jobs = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -57,6 +60,12 @@ const Jobs = () => {
     }
   };
 
+  const truncateHash = (hash) => {
+    return hash.length > HASH_DISPLAY_LENGTH 
+      ? `${hash.substring(0, HASH_DISPLAY_LENGTH)}...` 
+      : hash;
+  };
+
   return (
     <Box>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
@@ -81,7 +90,7 @@ const Jobs = () => {
                       {job.hash_type.toUpperCase()} Hash
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                      {job.hash_value.substring(0, 40)}...
+                      {truncateHash(job.hash_value)}
                     </Typography>
                     {job.result && (
                       <Typography variant="body2" color="success.main" mt={1}>

@@ -3,29 +3,28 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.models import db, User, CrackingJob, UserStatistics, Installation, AppSettings
 from datetime import datetime, timedelta
 from sqlalchemy import func
+from functools import wraps
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/api/admin')
 
-def admin_required():
+def admin_required(fn):
     """Decorator to check if user is admin"""
-    def wrapper(fn):
-        @jwt_required()
-        def decorated_function(*args, **kwargs):
-            current_user_id = get_jwt_identity()
-            user = User.query.get(current_user_id)
-            
-            if not user or not user.is_admin:
-                return jsonify({'error': 'Admin access required'}), 403
-            
-            return fn(*args, **kwargs)
+    @wraps(fn)
+    @jwt_required()
+    def decorated_function(*args, **kwargs):
+        current_user_id = get_jwt_identity()
+        user = User.query.get(current_user_id)
         
-        decorated_function.__name__ = fn.__name__
-        return decorated_function
-    return wrapper
+        if not user or not user.is_admin:
+            return jsonify({'error': 'Admin access required'}), 403
+        
+        return fn(*args, **kwargs)
+    
+    return decorated_function
 
 
 @admin_bp.route('/stats', methods=['GET'])
-@admin_required()
+@admin_required
 def get_admin_stats():
     """Get overall platform statistics"""
     try:
@@ -78,7 +77,7 @@ def get_admin_stats():
 
 
 @admin_bp.route('/users', methods=['GET'])
-@admin_required()
+@admin_required
 def get_users():
     """Get all users"""
     try:
@@ -102,7 +101,7 @@ def get_users():
 
 
 @admin_bp.route('/users/<int:user_id>/upgrade', methods=['POST'])
-@admin_required()
+@admin_required
 def upgrade_user(user_id):
     """Upgrade user to paid"""
     try:
@@ -125,7 +124,7 @@ def upgrade_user(user_id):
 
 
 @admin_bp.route('/users/<int:user_id>/admin', methods=['POST'])
-@admin_required()
+@admin_required
 def make_admin(user_id):
     """Make user an admin"""
     try:
@@ -155,7 +154,7 @@ def make_admin(user_id):
 
 
 @admin_bp.route('/installations', methods=['GET'])
-@admin_required()
+@admin_required
 def get_installations():
     """Get all installations"""
     try:
@@ -179,7 +178,7 @@ def get_installations():
 
 
 @admin_bp.route('/jobs', methods=['GET'])
-@admin_required()
+@admin_required
 def get_all_jobs():
     """Get all jobs"""
     try:
@@ -209,7 +208,7 @@ def get_all_jobs():
 
 
 @admin_bp.route('/settings', methods=['GET'])
-@admin_required()
+@admin_required
 def get_settings():
     """Get all app settings"""
     try:
@@ -224,7 +223,7 @@ def get_settings():
 
 
 @admin_bp.route('/settings', methods=['POST'])
-@admin_required()
+@admin_required
 def update_settings():
     """Update app settings"""
     try:
