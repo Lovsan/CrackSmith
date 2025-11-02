@@ -19,4 +19,7 @@ with app.app_context():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    # IMPORTANT: Set DEBUG=False in production!
+    # Debug mode allows arbitrary code execution and should never be enabled in production
+    debug_mode = os.environ.get('FLASK_ENV') == 'development'
+    app.run(host='0.0.0.0', port=port, debug=debug_mode)
